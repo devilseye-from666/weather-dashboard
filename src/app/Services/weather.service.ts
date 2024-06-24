@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
 import { LocationDetails } from '../Models/LocationDetails';
 import { WeatherDetails } from '../Models/WeatherDetails';
-import { Time } from "@angular/common";
-
 import { TemperatureData } from '../Models/TemperatureData';
 import { todayData } from '../Models/todayData';
 import { weekData } from '../Models/weekData';
@@ -16,14 +13,11 @@ import { environmentVariables } from '../Environment/environmentVariables';
   providedIn: 'root'
 })
 export class WeatherService {
-
   currentTime: Date;
   cityName: string = 'USA';
-
   locationDetails?: LocationDetails;
   weatherDetails?: WeatherDetails;
 
-  // Variables that have the extracted Data from the API Endpoints
   temperatureData: TemperatureData = new TemperatureData();
   todayData: todayData[] = [];
   weekData: weekData[] = [];
@@ -31,7 +25,6 @@ export class WeatherService {
 
   constructor(private httpClient: HttpClient) {
     this.getData();
-    
   }
 
   formatDate(date: Date, options: Intl.DateTimeFormatOptions) {
@@ -39,52 +32,62 @@ export class WeatherService {
   }
 
   fillTemperatureDataModel() {
-    // setting left Container Data model Properties
+    if (!this.locationDetails) {
+      console.error('Location details not available');
+      return;
+    }
+
     this.currentTime = new Date();
     const lastUpdated = this.locationDetails.location.localtime;
     const date = new Date(lastUpdated);
-    
     this.temperatureData.day = this.formatDate(date, { weekday: 'long' });
     this.temperatureData.time = `${String(this.currentTime.getHours()).padStart(2, '0')}:${String(this.currentTime.getMinutes()).padStart(2, '0')}`;
-    
     this.temperatureData.temperature = this.locationDetails.current.temp_c;
     this.temperatureData.location = `${this.locationDetails.location.name}, ${this.locationDetails.location.region}, ${this.locationDetails.location.country}`;
-    
     this.temperatureData.rainPercentage = this.locationDetails.current.precip_mm;
     this.temperatureData.SummaryPhrase = this.locationDetails.current.condition.text;
     this.temperatureData.summaryImge = this.locationDetails.current.condition.icon;
   }
 
-  //Method to fill week model
   fillWeekDataModel() {
-    var weekCount = 0;
+    if (!this.weatherDetails) {
+      console.error('Weather details not available');
+      return;
+    }
 
-    while (weekCount < 8) { // Use less than 8 to correctly iterate for 7 days
+    this.weekData = [];
+    for (let weekCount = 0; weekCount < 7; weekCount++) {
       this.weekData.push(new weekData());
-      const date = new Date(this.weatherDetails!.forecast.forecastday[weekCount].date);
+      const date = new Date(this.weatherDetails.forecast.forecastday[weekCount].date);
       this.weekData[weekCount].day = this.formatDate(date, { weekday: 'long' });
       this.weekData[weekCount].tempMax = this.weatherDetails.forecast.forecastday[weekCount].day.maxtemp_c.toString();
       this.weekData[weekCount].tempMin = this.weatherDetails.forecast.forecastday[weekCount].day.mintemp_c.toString();
-      this.weekData[weekCount].summaryImage = this.weatherDetails!.forecast.forecastday[weekCount].day.condition.icon;
-      weekCount++;
+      this.weekData[weekCount].summaryImage = this.weatherDetails.forecast.forecastday[weekCount].day.condition.icon;
     }
   }
 
   fillTodayData() {
-    var todayCount = 0;
-    while (todayCount < 24) { // Use less than 24 to correctly iterate for the day's hours
+    if (!this.weatherDetails) {
+      console.error('Weather details not available');
+      return;
+    }
+
+    this.todayData = [];
+    for (let todayCount = 0; todayCount < 24; todayCount += 3) {
       let todayDataInstance = new todayData();
       todayDataInstance.time = this.weatherDetails.forecast.forecastday[0].hour[todayCount].time.split(" ")[1];
       todayDataInstance.summaryImage = this.weatherDetails.forecast.forecastday[0].hour[todayCount].condition.icon;
       todayDataInstance.temperature = this.weatherDetails.forecast.forecastday[0].hour[todayCount].temp_c;
       this.todayData.push(todayDataInstance);
-      todayCount += 3;
     }
   }
 
-  //Method to get TOday's Highlight Data from the  Base variable
-
   fillTodaysHighlight() {
+    if (!this.locationDetails || !this.weatherDetails) {
+      console.error('Location or weather details not available');
+      return;
+    }
+
     this.todaysHighlight.uvIndex = this.locationDetails.current.uv;
     this.todaysHighlight.humidity = this.locationDetails.current.humidity;
     this.todaysHighlight.visibility = this.locationDetails.current.vis_km;
@@ -93,7 +96,6 @@ export class WeatherService {
     this.todaysHighlight.sunrise = this.weatherDetails.forecast.forecastday[0].astro.sunrise;
     this.todaysHighlight.sunset = this.weatherDetails.forecast.forecastday[0].astro.sunset;
   }
-
 
   prepareData(): void {
     this.fillTemperatureDataModel();
@@ -104,9 +106,7 @@ export class WeatherService {
     console.log(this.weekData);
     console.log(this.todayData);
     console.log(this.todaysHighlight);
-    
   }
-
 
   celsiusToFahrenheit(celsius: number) {
     return celsius * 9 / 5 + 32;
@@ -118,39 +118,39 @@ export class WeatherService {
 
   getLocationDetails(q: string): Observable<LocationDetails> {
     return this.httpClient.get<LocationDetails>(environmentVariables.weatherApiLocationBaseURL, {
-      headers: new HttpHeaders()
-        .set(environmentVariables.key_name, environmentVariables.key),
-      params: new HttpParams()
-        .set('q', q)
+      headers: new HttpHeaders().set(environmentVariables.key_name, environmentVariables.key),
+      params: new HttpParams().set('q', q)
     });
   }
 
   getWeatherDetails(q: string, days: number): Observable<WeatherDetails> {
     return this.httpClient.get<WeatherDetails>(environmentVariables.weatherApiForecastBaseURL, {
-      headers: new HttpHeaders()
-        .set(environmentVariables.key_name, environmentVariables.key),
-      params: new HttpParams()
-        .set('q', q)
-        .set('days', days.toString())
+      headers: new HttpHeaders().set(environmentVariables.key_name, environmentVariables.key),
+      params: new HttpParams().set('q', q).set('days', days.toString())
     });
   }
 
   getData() {
-    // Implement the logic to get the data
-    var days = 9;
+    const days = 9;
     this.getLocationDetails(this.cityName).subscribe({
       next: (response) => {
         this.locationDetails = response;
         console.log(this.locationDetails);
-    
-      }
-    });
 
-    this.getWeatherDetails(this.cityName, days).subscribe({
-      next: (response) => {
-        this.weatherDetails = response;
-        this.prepareData();
-        console.log(this.weatherDetails);
+        // Only fetch weather details if location details are successfully fetched
+        this.getWeatherDetails(this.cityName, days).subscribe({
+          next: (response) => {
+            this.weatherDetails = response;
+            this.prepareData();
+            console.log(this.weatherDetails);
+          },
+          error: (err) => {
+            console.error('Failed to fetch weather details:', err);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Failed to fetch location details:', err);
       }
     });
   }

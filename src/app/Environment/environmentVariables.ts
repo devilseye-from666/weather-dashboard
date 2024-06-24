@@ -2,8 +2,8 @@ export const environmentVariables = {
     production:  false,
 
     //Base URLS to access the APIEndpoints
-    weatherApiLocationBaseURL: "http://api.weatherapi.com/v1/current.json?",
-    weatherApiForecastBaseURL:"http://api.weatherapi.com/v1/forecast.json?",
+    weatherApiLocationBaseURL: "https://api.weatherapi.com/v1/current.json?",
+    weatherApiForecastBaseURL:"https://api.weatherapi.com/v1/forecast.json?",
 
 
     //Headers

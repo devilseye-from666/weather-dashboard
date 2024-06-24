@@ -13,26 +13,26 @@
 
     <div class="left-container-data-box ">
         <div class="left-container-temp-data">
-            <div class="left-container-temp-img justify-center items-center"><img src="./../../assets/pngwing.com.png" alt=""></div>
-            <div class="left-container-temp-value">12<sup>°C</sup></div>
-            <div class="left-container-temp-day-time">Monday, <span class="time">16:00</span></div>
+            <div class="left-container-temp-img justify-center items-center"><img src={{this.weatherService.temperatureData.summaryImge}} alt="Summary Image"></div>
+            <div class="left-container-temp-value">{{this.weatherService.temperatureData.temperature}}<sup>°C</sup></div>
+            <div class="left-container-temp-day-time">{{this.weatherService.temperatureData.day}}, <span class="time">{{this.weatherService.temperatureData.time}}</span></div>
         </div>
         <div class="dividing-line"></div>
 
         <div class="left-container-other-details">
             <div class="left-container-temp-summary">
                 <div class="left-container-temp-summary-phrase-img"><fa-icon class="fa-lg" [icon]="faCloud" style="color: #4050d2"></fa-icon></div>
-                <div class="left-container-temp-summary-value">Mostly Cloudy</div>
+                <div class="left-container-temp-summary-value">{{this.weatherService.temperatureData.SummaryPhrase}}</div>
                 
             </div>
             <div class="left-container-rain-status">
                 <div class="left-container-rain-status-img"><fa-icon class="fa-lg" [icon]="faCloudRain" style="color: #4050d2"></fa-icon></div>
-                <div class="left-container-rain-status-img-value">Rain - 30%</div>
+                <div class="left-container-rain-status-img-value">Rain - {{this.weatherService.temperatureData.rainPercentage}}m/h</div>
             </div>
 
             <div class="left-container-location-details">
                 <div class="left-container-location-img"><img src="./../../assets/view-Guwahati-Assam-India.webp" alt=""></div>
-                <div class="left-container-location-name">Guwahati, India</div>
+                <div class="left-container-location-name">{{this.weatherService.temperatureData.location}}</div>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { LocationDetails } from '../Models/LocationDetails';
 import { WeatherDetails } from '../Models/WeatherDetails';
+import { Time } from "@angular/common";
 
 import { TemperatureData } from '../Models/TemperatureData';
 import { todayData } from '../Models/todayData';
@@ -17,7 +18,7 @@ import { environmentVariables } from '../Environment/environmentVariables';
 export class WeatherService {
 
   currentTime: Date;
-  cityName: string = 'Guwahati';
+  cityName: string = 'USA';
 
   locationDetails?: LocationDetails;
   weatherDetails?: WeatherDetails;
@@ -26,7 +27,7 @@ export class WeatherService {
   temperatureData: TemperatureData = new TemperatureData();
   todayData: todayData[] = [];
   weekData: weekData[] = [];
-  todaysHighlight?: todaysHighlight;
+  todaysHighlight: todaysHighlight = new todaysHighlight();
 
   constructor(private httpClient: HttpClient) {
     this.getData();
@@ -81,14 +82,38 @@ export class WeatherService {
     }
   }
 
+  //Method to get TOday's Highlight Data from the  Base variable
+
+  fillTodaysHighlight() {
+    this.todaysHighlight.uvIndex = this.locationDetails.current.uv;
+    this.todaysHighlight.humidity = this.locationDetails.current.humidity;
+    this.todaysHighlight.visibility = this.locationDetails.current.vis_km;
+    this.todaysHighlight.feelsLike = this.locationDetails.current.feelslike_c;
+    this.todaysHighlight.windStatus = this.locationDetails.current.wind_kph;
+    this.todaysHighlight.sunrise = this.weatherDetails.forecast.forecastday[0].astro.sunrise;
+    this.todaysHighlight.sunset = this.weatherDetails.forecast.forecastday[0].astro.sunset;
+  }
+
+
   prepareData(): void {
     this.fillTemperatureDataModel();
     this.fillWeekDataModel();
     this.fillTodayData();
+    this.fillTodaysHighlight();
     console.log(this.temperatureData);
     console.log(this.weekData);
     console.log(this.todayData);
+    console.log(this.todaysHighlight);
     
+  }
+
+
+  celsiusToFahrenheit(celsius: number) {
+    return celsius * 9 / 5 + 32;
+  }
+
+  fahrenheitToCelsius(fahrenheit: number) {
+    return (fahrenheit - 32) * 5 / 9;
   }
 
   getLocationDetails(q: string): Observable<LocationDetails> {

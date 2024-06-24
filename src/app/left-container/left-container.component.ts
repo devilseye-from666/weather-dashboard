@@ -20,7 +20,7 @@ export class LeftContainerComponent {
 
   
 
-constructor( weatherService: WeatherService) {
+constructor( public weatherService: WeatherService) {
 
 }
 }

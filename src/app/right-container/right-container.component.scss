@@ -1,0 +1,344 @@
+.right-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .right-container-nav-bar {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: medium;
+    font-weight: bold;
+  }
+  
+  .nav-bar-tabs {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-left: 30px;
+    margin-top: 10px;
+  }
+  
+  .today, .week {
+    margin-right: 15px;
+    color: #4d4747;
+  }
+  
+  .today:hover, .week:hover {
+    color: #1a1a1a;
+    cursor: pointer;
+  }
+  
+  .today-active, .week-active {
+    color: #1a1a1a;
+  }
+  
+  .under-line {
+    position: absolute;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: #1a1a1a;
+    transition: transform 100ms;
+  }
+  
+  .under-line-today {
+    transform: translateX(0);
+  }
+  
+  .under-line-week {
+    transform: translateX(60px); /* Adjust based on the width of your tabs */
+  }
+  
+  .nav-bar-metric {
+    display: flex;
+    flex-direction: row;
+    margin-right: 30px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .celsius, .fahrenheit {
+    border-radius: 500px;
+    padding: 5px 12px;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    font-size: medium;
+    margin-left: 10px;
+  }
+  
+  .celsius-active, .fahrenheit-active {
+    color: #ffffff;
+    background-color: #1a1a1a;
+  }
+  
+  .celsius:hover, .fahrenheit:hover {
+    color: #ffffff;
+    background-color: #1a1a1a;
+    cursor: pointer;
+  }
+  
+
+  //Data Box
+  .right-container-data-box {
+    flex: 12;
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    margin-top: 10px;
+  }
+  
+  .right-container-week-cards{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    
+  }
+
+  .card{
+    width: 5.5vw;
+    height: 110px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-left:5px ;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+
+    font-weight: 500;
+  }
+  .card-day{
+    margin: 5px;
+  }
+  .card-temp-img{
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-temp-value{
+    margin: 5px;
+  }
+
+
+
+  .card-temp-img img{
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .right-container-today-cards{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .right-container-todays-highlight{
+    flex: 3;
+    // background-color: black;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right-container-todays-highlight-title{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    flex: 2;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+
+  .right-container-todays-highlight-cards{
+    flex: 12;
+   display: flex; 
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   margin-top: -10px;
+
+  }
+
+  .right-container-todays-highlight-card{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 15px;
+    width: 220px;
+    height: 150px;
+    justify-content: center;
+    align-items: center; /* Add this line to center the content horizontally */
+    text-align: center;
+    margin-left: 30px ;
+
+}
+
+.right-container-todays-highlight-card-title{
+  flex: 1;
+  color:#767474 ;
+  margin-top: 10px;
+  font-size: medium;
+  font-weight: 600;
+  margin-left: 20px;
+  align-self: self-start;
+}
+
+.gauge{
+    flex: 2;
+    display: flex;
+    margin-top: -30px;
+    width: 60%;
+    max-width: 180px;
+    font-size: 32px;
+    color: #004033;
+    font-weight: bold;
+
+}
+
+.gauge-body{
+    width: 100%;
+    height: 0;
+    padding-bottom: 50%;
+    background: #7e7b7b;
+    position: relative;
+    border-top-left-radius: 100% 200%;
+    border-top-right-radius: 100% 200%;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.gauge-fill{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: inherit;
+  height: 100%;
+  background: #ffbf5e ;
+  transform-origin: center top;
+  transform: rotate(0.25turn);
+  transition: transform 0.2s ease-out;
+}
+
+.gauge-cover{
+  width: 75%;
+  height: 150%;
+  background: #ffffff;
+  border-radius: 50% ;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  //text
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 25%;
+  box-sizing: border-box;
+  color: #ffffff;
+}
+
+.right-container-todays-highlight-value{
+  flex: 1;
+  margin-top: -70px;
+  margin-bottom: 10px;
+  font-size: xx-large;
+  font-weight: 600;
+  z-index: 1;
+}
+
+
+.wind-status-value{
+  flex: 2;
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.unit{
+  font-size: large;
+}
+
+.wind-status-logo{
+  flex: 1;
+  
+  align-self: self-start;
+  margin-left: 40px ;
+}
+
+.wind-status-logo img{
+  width: 30px;
+  height: 30px;
+}
+
+
+.sunrise-sunset-value{
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.sunrise{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.sunrise-img{
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.sunrise-img img{
+  width: 90px;
+  height: 40px;
+  
+}
+
+.sunrise-time{
+  flex: 4;
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.sunset{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sunset-img{
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.sunset-img img{
+  width: 70px;
+  height: 40px;
+}
+
+.sunset-time{
+  flex: 4;
+  font-size: x-large;
+  font-weight: 600;
+}
+

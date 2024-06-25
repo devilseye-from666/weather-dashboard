@@ -9,7 +9,7 @@ import { WeatherService } from '../Services/weather.service';
 @Component({
   selector: 'app-right-container',
   templateUrl: './right-container.component.html',
-  styleUrls: ['./right-container.component.scss']
+  styleUrls: ['./right-container.component.scss','./new.scss']
 })
 export class RightContainerComponent {
 

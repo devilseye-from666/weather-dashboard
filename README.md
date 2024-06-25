@@ -14,57 +14,64 @@ The project is organized into:
 5. Assets
 6. Root Files
 
-Components
+Components:
+  
+  Left Container Component
+      Path: src/app/left-container
+      Purpose: Displays weather details like today's highlights and weekly forecast.
+  
+  
+  Right Container Component
+      Path: src/app/left-container
+      Purpose: Displays weather details like today's highlights and weekly forecast.
 
-Left Container Component
-Path: src/app/left-container
-Purpose: Displays weather details like today's highlights and weekly forecast.
 
-Right Container Component
-Path: src/app/right-container
-Purpose: Handles user interactions such as location selection and settings.
 
 Models
-Located in src/app/Models, these define data structures:
-
-LocationDetails.ts
-TemperatureData.ts
-TodayData.ts
-TodaysHighlight.ts
-WeatherDetails.ts
-WeekData.ts
+    Located in src/app/Models, these define data structures:
+      
+      LocationDetails.ts
+      TemperatureData.ts
+      TodayData.ts
+      TodaysHighlight.ts
+      WeatherDetails.ts
+      WeekData.ts
 
 Services
+    
+    Weather Service
+    Path: src/app/Services/weather.service.ts
+    Purpose: Fetches and processes weather data from external APIs.
 
-Weather Service
-Path: src/app/Services/weather.service.ts
-Purpose: Fetches and processes weather data from external APIs.
 
 Environment Variables
-File: environmentVariables.ts
-Purpose: Stores configuration settings like API keys and base URLs.
+    
+    File: environmentVariables.ts
+    Purpose: Stores configuration settings like API keys and base URLs.
 
 Assets
-Path: src/assets
-Purpose: Contains static assets like images and stylesheets.
+    Path: src/assets
+    Purpose: Contains static assets like images and stylesheets.
 
 Root Files
-
-app-routing.module.ts: Configures routes.
-
-app.component.*: Root component files.
-
-app.module.ts: Root module.
-
-index.html and main.ts: Entry points.
-
-styles.scss: Global styles.
-
-favicon.ico: Browser tab icon.
+    
+    app-routing.module.ts: Configures routes.
+    
+    app.component.*: Root component files.
+    
+    app.module.ts: Root module.
+    
+    index.html and main.ts: Entry points.
+    
+    styles.scss: Global styles.
+    
+    favicon.ico: Browser tab icon.
 
 Development Workflow
+    First Clone the Repo.
+    After Clone the Repo install npm module by ***npm i or npm install***
 
-Development Server: ng serve -o
+Development Server: the run ***ng serve -o***
 
 
 

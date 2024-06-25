@@ -14,7 +14,7 @@
     <div class="left-container-data-box ">
         <div class="left-container-temp-data">
             <div class="left-container-temp-img justify-center items-center"><img src={{this.weatherService.temperatureData.summaryImge}} alt="Summary Image"></div>
-            <div class="left-container-temp-value">{{this.weatherService.temperatureData.temperature}}<sup>°C</sup></div>
+            <div class="left-container-temp-value">{{this.weatherService.celsius== true? this.weatherService.temperatureData.temperature : this.weatherService.celsiusToFahrenheit(this.weatherService.temperatureData.temperature)}}<sup>{{this.weatherService.celsius== true? "°C":"°F"}}</sup></div>
             <div class="left-container-temp-day-time">{{this.weatherService.temperatureData.day}}, <span class="time">{{this.weatherService.temperatureData.time}}</span></div>
         </div>
         <div class="dividing-line"></div>

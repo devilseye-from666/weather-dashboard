@@ -14,7 +14,14 @@ import { environmentVariables } from '../Environment/environmentVariables';
 })
 export class WeatherService {
   currentTime: Date;
-  cityName: string = 'USA';
+  today: boolean = true;
+  week: boolean = false;
+
+  celsius: boolean = true;
+  fahrenheit: boolean = false;
+
+
+  cityName: string = 'Guwahati';
   locationDetails?: LocationDetails;
   weatherDetails?: WeatherDetails;
 

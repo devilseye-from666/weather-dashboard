@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faThumbsUp, faThumbsDown, faSmile,faFaceFrown } from '@fortawesome/free-solid-svg-icons';
+import { WeatherService } from '../Services/weather.service';
 
 
 
@@ -9,6 +10,8 @@ import { faThumbsUp, faThumbsDown, faSmile,faFaceFrown } from '@fortawesome/free
   styleUrls: ['./right-container.component.scss']
 })
 export class RightContainerComponent {
+
+  constructor(public weatherService: WeatherService){};
   //icons
   faThumbsUp:any = faThumbsUp;
   faThumbsDown:any = faThumbsDown;
@@ -16,29 +19,25 @@ export class RightContainerComponent {
   faFaceFrown:any=faFaceFrown;
 
 
-  today: boolean = true;
-  week: boolean = false;
-
-  celsius: boolean = true;
-  fahrenheit: boolean = false;
+  
 
   onTodayClick() {
-    this.today = true;
-    this.week = false;
+    this.weatherService.today = true;
+    this.weatherService.week = false;
   }
 
   onWeekClick() {
-    this.week = true;
-    this.today = false;
+    this.weatherService.week = true;
+    this.weatherService.today = false;
   }
 
   onCelsiusClick() {
-    this.celsius = true;
-    this.fahrenheit = false;
+    this.weatherService.celsius = true;
+    this.weatherService.fahrenheit = false;
   }
 
   onFahrenheitClick() {
-    this.fahrenheit = true;
-    this.celsius = false;
+    this.weatherService.fahrenheit = true;
+    this.weatherService.celsius = false;
   }
 }

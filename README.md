@@ -1,27 +1,69 @@
-# WeatherDashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+WeatherDashboard Architecture
 
-## Development server
+Overview
+The WeatherDashboard is an Angular application structured for clarity and separation of concerns, displaying weather information efficiently.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Project Structure
+The project is organized into:
 
-## Code scaffolding
+1. Components
+2. Models
+3. Services
+4. Environment Variables
+5. Assets
+6. Root Files
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Components
 
-## Build
+Left Container Component
+Path: src/app/left-container
+Purpose: Displays weather details like today's highlights and weekly forecast.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Right Container Component
+Path: src/app/right-container
+Purpose: Handles user interactions such as location selection and settings.
 
-## Running unit tests
+Models
+Located in src/app/Models, these define data structures:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+LocationDetails.ts
+TemperatureData.ts
+TodayData.ts
+TodaysHighlight.ts
+WeatherDetails.ts
+WeekData.ts
 
-## Running end-to-end tests
+Services
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Weather Service
+Path: src/app/Services/weather.service.ts
+Purpose: Fetches and processes weather data from external APIs.
 
-## Further help
+Environment Variables
+File: environmentVariables.ts
+Purpose: Stores configuration settings like API keys and base URLs.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Assets
+Path: src/assets
+Purpose: Contains static assets like images and stylesheets.
+
+Root Files
+
+app-routing.module.ts: Configures routes.
+app.component.*: Root component files.
+app.module.ts: Root module.
+index.html and main.ts: Entry points.
+styles.scss: Global styles.
+favicon.ico: Browser tab icon.
+
+Development Workflow
+
+Development Server: ng serve
+Code Scaffolding: ng generate component component-name
+Build: ng build
+Unit Tests: ng test
+End-to-End Tests: ng e2e
+
+Conclusion
+The WeatherDashboard is structured for maintainability and scalability, with clear separation of components, services, and models. Environment variables and services promote a clean, organized codebase.

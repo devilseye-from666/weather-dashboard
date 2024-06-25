@@ -5,7 +5,7 @@
                 (click)="onTodayClick()">Today</div>
             <div class="week" [className]="weatherService.week==true?'week week-active':'week'" (click)="onWeekClick()">
                 Week</div>
-            <div class="under-line"
+            <div class="under-line " style="display: none;"
                 [className]="weatherService.today==true?'under-line under-line-today':'under-line under-line-week'">
 
             </div>

@@ -104,6 +104,33 @@ margin-right: 10px;
     height: 100%;
 }
 
+@media screen and (max-width: 700px) {
+    .left-container-nav-bar{
+        margin-top: 10px;
+    }
+    .left-container-temp-img {
+        width: 100px;
+        height: 100px;
+    }
+    .left-container-temp-value{
+        flex: 1;
+        font-size: 40px;
+        font-weight: normal;
+    }
+    
+    .left-container-temp-value sup{
+        position: relative;
+        
+        font-size: 20px ;
+    }
+    .left-container-location-name{
+        font-size: 15px;
+    }
+
+    
+}
+
+
 .left-container-temp-value{
     flex: 1;
     font-size: 60px;
@@ -191,7 +218,9 @@ margin-right: 10px;
 
 .left-container-location-name{
     margin-top: -60px;
-    font-size: large;
+    
     font-weight: bold;
     color: #ffffff;
 }
+
+

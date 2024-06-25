@@ -11,16 +11,28 @@ import { WeatherService } from '../Services/weather.service';
   styleUrls: ['./left-container.component.scss']
 })
 export class LeftContainerComponent {
-  faMagnifyingGlass:any = faMagnifyingGlass;
-  faLocation:any =faLocation;
+  faMagnifyingGlass: any = faMagnifyingGlass;
+  faLocation: any = faLocation;
 
   // Variables for Temp Summary
-  faCloud:any = faCloud;
-  faCloudRain:any = faCloudRain;
+  faCloud: any = faCloud;
+  faCloudRain: any = faCloudRain;
 
-  
+  loading: boolean = false;
 
-constructor( public weatherService: WeatherService) {
+  constructor(public weatherService: WeatherService) {}
 
-}
+  onSearch(location: string) {
+    this.loading = true;
+    this.weatherService.cityName = location;
+    this.weatherService.getData().subscribe({
+      next: () => {
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to fetch data:', err);
+        this.loading = false;
+      }
+    });
+  }
 }

@@ -1,38 +1,52 @@
 <div class="left-container">
     <div class="left-container-nav-bar">
-        <div class="search-icon">
+        <div class="search-icon" (click)="onSearch(location.value)">
             <fa-icon class="fa-lg" [icon]="faMagnifyingGlass"></fa-icon>
         </div>
         <div class="search-input">
-            <input type="text" placeholder="Search For Places" name="" id="">
+            <input type="text" placeholder="Search For Places" #location name="" id="" (keyup.Enter)="onSearch(location.value)">
         </div>
-        <div class="search-location-icon">
+        <div class="search-location-icon" (click)="onSearch(location.value)">
             <fa-icon class="fa-lg" [icon]="faLocation"></fa-icon>
         </div>
     </div>
 
-    <div class="left-container-data-box ">
+    <div *ngIf="loading" class="loading-spinner absolute z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <!-- Loading Spinner -->
+        <div class="spinner"></div>
+    </div>
+
+    <div  class="left-container-data-box">
         <div class="left-container-temp-data">
-            <div class="left-container-temp-img justify-center items-center"><img src={{this.weatherService.temperatureData.summaryImge}} alt="Summary Image"></div>
-            <div class="left-container-temp-value">{{this.weatherService.celsius== true? this.weatherService.temperatureData.temperature : this.weatherService.celsiusToFahrenheit(this.weatherService.temperatureData.temperature)}}<sup>{{this.weatherService.celsius== true? "°C":"°F"}}</sup></div>
-            <div class="left-container-temp-day-time">{{this.weatherService.temperatureData.day}}, <span class="time">{{this.weatherService.temperatureData.time}}</span></div>
+            <div class="left-container-temp-img justify-center items-center">
+                <img src={{weatherService.temperatureData.summaryImge}} alt="Summary Image">
+            </div>
+            <div class="left-container-temp-value">
+                {{weatherService.celsius ? weatherService.temperatureData.temperature : weatherService.celsiusToFahrenheit(weatherService.temperatureData.temperature)}}<sup>{{weatherService.celsius ? "°C":"°F"}}</sup>
+            </div>
+            <div class="left-container-temp-day-time">{{weatherService.temperatureData.day}}, <span class="time">{{weatherService.temperatureData.time}}</span></div>
         </div>
         <div class="dividing-line"></div>
 
         <div class="left-container-other-details">
             <div class="left-container-temp-summary">
-                <div class="left-container-temp-summary-phrase-img"><fa-icon class="fa-lg" [icon]="faCloud" style="color: #4050d2"></fa-icon></div>
-                <div class="left-container-temp-summary-value">{{this.weatherService.temperatureData.SummaryPhrase}}</div>
-                
+                <div class="left-container-temp-summary-phrase-img">
+                    <fa-icon class="fa-lg" [icon]="faCloud" style="color: #4050d2"></fa-icon>
+                </div>
+                <div class="left-container-temp-summary-value">{{weatherService.temperatureData.SummaryPhrase}}</div>
             </div>
             <div class="left-container-rain-status">
-                <div class="left-container-rain-status-img"><fa-icon class="fa-lg" [icon]="faCloudRain" style="color: #4050d2"></fa-icon></div>
-                <div class="left-container-rain-status-img-value">Rain - {{this.weatherService.temperatureData.rainPercentage}}m/h</div>
+                <div class="left-container-rain-status-img">
+                    <fa-icon class="fa-lg" [icon]="faCloudRain" style="color: #4050d2"></fa-icon>
+                </div>
+                <div class="left-container-rain-status-img-value">Rain - {{weatherService.temperatureData.rainPercentage}}m/h</div>
             </div>
 
             <div class="left-container-location-details">
-                <div class="left-container-location-img"><img src="./../../assets/view-Guwahati-Assam-India.webp" alt=""></div>
-                <div class="left-container-location-name">{{this.weatherService.temperatureData.location}}</div>
+                <div class="left-container-location-img">
+                    <img src="./../../assets/view-Guwahati-Assam-India.webp" alt="">
+                </div>
+                <div class="left-container-location-name">{{weatherService.temperatureData.location}}</div>
             </div>
         </div>
     </div>

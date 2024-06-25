@@ -1,134 +1,53 @@
 <div class="right-container">
     <div class="right-container-nav-bar">
         <div class="nav-bar-tabs">
-            <div class="today" [className]="weatherService.today==true?'today today-active':'today'" (click)="onTodayClick()">Today</div>
-            <div class="week"  [className]="weatherService.week==true?'week week-active':'week'" (click)="onWeekClick()">Week</div>
-            <div class="under-line" [className]="weatherService.today==true?'under-line under-line-today':'under-line under-line-week'">
+            <div class="today" [className]="weatherService.today==true?'today today-active':'today'"
+                (click)="onTodayClick()">Today</div>
+            <div class="week" [className]="weatherService.week==true?'week week-active':'week'" (click)="onWeekClick()">
+                Week</div>
+            <div class="under-line"
+                [className]="weatherService.today==true?'under-line under-line-today':'under-line under-line-week'">
 
             </div>
         </div>
         <div class="nav-bar-metric">
-            <div class="celsius" (click)="onCelsiusClick()" [className]="weatherService.celsius==true?'celsius celsius-active':'celsius'">°C</div>
-            <div class="fahrenheit" (click)="onFahrenheitClick()" [className]="weatherService.fahrenheit==true?'fahrenheit fahrenheit-active':'fahrenheit'">°F</div>
+            <div class="celsius" (click)="onCelsiusClick()"
+                [className]="weatherService.celsius==true?'celsius celsius-active':'celsius'">°C</div>
+            <div class="fahrenheit" (click)="onFahrenheitClick()"
+                [className]="weatherService.fahrenheit==true?'fahrenheit fahrenheit-active':'fahrenheit'">°F</div>
         </div>
     </div>
     <div class="right-container-data-box">
         <div class="right-container-week-cards" *ngIf="weatherService.week==true">
-            <div class="card">
-                <div class="card-day">Sun</div>
+
+            <div class="card" *ngFor="let card of weatherService.weekData">
+                <div class="card-day">{{card.day}}</div>
                 <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
+                    <img src="{{card.summaryImage}}" alt="Image" class="">
                 </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
+
+                <div class="card-temp-value"><span class="temp-max">{{this.weatherService.celsius== true? card.tempMax :
+                        this.weatherService.celsiusToFahrenheit(card.tempMax)}}<sup>{{weatherService.celsius ?
+                            "°C":"°F"}}</sup> - </span><span class="temp-min">{{this.weatherService.celsius== true?
+                        card.tempMin :
+                        this.weatherService.celsiusToFahrenheit(card.tempMin)}}<sup>{{weatherService.celsius ?
+                            "°C":"°F"}}</sup></span></div>
             </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            <div class="card">
-                <div class="card-day">Sun</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value"><span class="temp-max">15°</span><span class="temp-min">5°</span></div>
-            </div>
-            
+
+
         </div>
         <div class="right-container-today-cards" *ngIf="weatherService.today==true">
-            <div class="card"> 
-                <div class="card-day">12:00</div>
+            <div class="card" *ngFor="let card of weatherService.todayData">
+                <div class="card-day">{{card.time}}</div>
                 <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
+                    <img src="{{card.summaryImage}}" alt="Image" class="">
                 </div>
-                
-                <div class="card-temp-value">15°</div>
+
+                <div class="card-temp-value">{{this.weatherService.celsius== true? card.temperature :
+                    this.weatherService.celsiusToFahrenheit(card.temperature)}}<sup>{{weatherService.celsius ?
+                        "°C":"°F"}}</sup></div>
             </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
-            <div class="card"> 
-                <div class="card-day">12:00</div>
-                <div class="card-temp-img flex  justify-center items-center">
-                    <img src="./../../assets/p1qs_4h7q_210525.jpg" alt="Image" class="">
-                </div>
-                
-                <div class="card-temp-value">15°</div>
-            </div>
+
         </div>
 
         <div class="right-container-todays-highlight ">
@@ -143,13 +62,14 @@
                         </div>
 
                     </div>
-                    <div class="right-container-todays-highlight-value">5</div>
+                    <div class="right-container-todays-highlight-value">{{weatherService.todaysHighlight.uvIndex}}</div>
                 </div>
                 <div class="right-container-todays-highlight-card">
                     <div class="right-container-todays-highlight-card-title">Wind Status</div>
-                    <div class="wind-status-value">7.70
-                       <span class="unit">km/h</span></div>
-                    
+                    <div class="wind-status-value">{{weatherService.todaysHighlight.windStatus}}
+                        <span class="unit">km/h</span>
+                    </div>
+
                     <div class="wind-status-logo"><img src="./../../assets/pngwing.com (1).png" alt=""></div>
                 </div>
                 <div class="right-container-todays-highlight-card">
@@ -157,11 +77,11 @@
                     <div class="sunrise-sunset-value">
                         <div class="sunrise">
                             <div class="sunrise-img"><img src="./../../assets/sunrise.png" alt=""></div>
-                            <div class="sunrise-time">6:35 AM</div>
+                            <div class="sunrise-time">{{weatherService.todaysHighlight.sunrise}}</div>
                         </div>
                         <div class="sunset">
                             <div class="sunset-img"><img src="./../../assets/sunset.png" alt=""></div>
-                            <div class="sunset-time">6:35 PM</div>
+                            <div class="sunset-time">{{weatherService.todaysHighlight.sunset}}</div>
                         </div>
                     </div>
                 </div>
@@ -169,21 +89,44 @@
             <div class="right-container-todays-highlight-cards">
                 <div class="right-container-todays-highlight-card">
                     <div class="right-container-todays-highlight-card-title">Humidity</div>
-                    <div class="wind-status-value">12
-                        <sup class="unit">%</sup></div>
-                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">Normal <span><fa-icon class="fa-lg" style="color: #4050d2" [icon]="faThumbsUp"></fa-icon></span></div>
+                    <div class="wind-status-value">{{weatherService.todaysHighlight.humidity}}
+                        <sup class="unit">%</sup>
+                    </div>
+                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">
+                        {{ this.weatherService.todaysHighlight.humidity < 30 ? 'Low' :
+                            this.weatherService.todaysHighlight.humidity>= 30 &&
+                            this.weatherService.todaysHighlight.humidity <= 50 ? 'Normal' :
+                                this.weatherService.todaysHighlight.humidity> 50 &&
+                                this.weatherService.todaysHighlight.humidity <= 60 ? 'High' : 'Very High' }} <span>
+                                    <fa-icon class="fa-lg" style="color: #4050d2" [icon]="getIconForHumidity()"></fa-icon></span>
+                    </div>
                 </div>
                 <div class="right-container-todays-highlight-card">
                     <div class="right-container-todays-highlight-card-title">Visibility</div>
-                    <div class="wind-status-value">5.2
-                        <span class="unit">km</span></div>
-                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">Average <span><fa-icon class="fa-lg" style="color: #4050d2" [icon]="faSmile"  ></fa-icon></span></div>
+                    <div class="wind-status-value">{{weatherService.todaysHighlight.visibility}}
+                        <span class="unit">km</span>
+                    </div>
+                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">{{
+                        this.weatherService.todaysHighlight.visibility >= 30 ? 'Clear' :
+                        this.weatherService.todaysHighlight.visibility >= 10 ? 'Moderate' :
+                        this.weatherService.todaysHighlight.visibility >= 2 ? 'Low' :
+                        'Poor' }}<span><fa-icon class="fa-lg" style="color: #4050d2" [icon]="getIconForVisibility()"></fa-icon></span>
+                    </div>
                 </div>
                 <div class="right-container-todays-highlight-card">
                     <div class="right-container-todays-highlight-card-title">Feels Like</div>
-                    <div class="wind-status-value">105
-                        </div>
-                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">Too Hot <span><fa-icon class="fa-lg" style="color: #4050d2" [icon]="faThumbsDown"></fa-icon></span></div>
+                    <div class="wind-status-value">
+                        {{this.weatherService.celsius== true? weatherService.todaysHighlight.feelsLike :
+                        this.weatherService.celsiusToFahrenheit(weatherService.todaysHighlight.feelsLike)}}<sup>{{weatherService.celsius
+                            ? "°C":"°F"}}</sup>
+                    </div>
+                    <div class="humidity-summary" style="margin-bottom: 10px; font-weight: bold;">{{
+                        weatherService.todaysHighlight.feelsLike >= 44 ? 'Hot' :
+                        weatherService.todaysHighlight.feelsLike >= 41 && weatherService.todaysHighlight.feelsLike < 44
+                            ? 'Very Hot ' : weatherService.todaysHighlight.feelsLike>= 38 &&
+                            weatherService.todaysHighlight.feelsLike < 41 ? 'High Temperature' : 'Normal' }} <span>
+                                <fa-icon class="fa-lg" style="color: #4050d2" [icon]="getIconForTemperature()"></fa-icon></span>
+                    </div>
                 </div>
             </div>
 

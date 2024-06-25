@@ -6,7 +6,7 @@ import { TemperatureData } from '../Models/TemperatureData';
 import { todayData } from '../Models/todayData';
 import { weekData } from '../Models/weekData';
 import { todaysHighlight } from '../Models/todaysHighlight';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { environmentVariables } from '../Environment/environmentVariables';
 
 @Injectable({
@@ -20,7 +20,6 @@ export class WeatherService {
   celsius: boolean = true;
   fahrenheit: boolean = false;
 
-
   cityName: string = 'Guwahati';
   locationDetails?: LocationDetails;
   weatherDetails?: WeatherDetails;
@@ -31,7 +30,8 @@ export class WeatherService {
   todaysHighlight: todaysHighlight = new todaysHighlight();
 
   constructor(private httpClient: HttpClient) {
-    this.getData();
+    
+    this.getData().subscribe();
   }
 
   formatDate(date: Date, options: Intl.DateTimeFormatOptions) {
@@ -63,13 +63,13 @@ export class WeatherService {
     }
 
     this.weekData = [];
-    for (let weekCount = 0; weekCount < 7; weekCount++) {
+    for (let weekCount = 1; weekCount < 8; weekCount++) {
       this.weekData.push(new weekData());
       const date = new Date(this.weatherDetails.forecast.forecastday[weekCount].date);
-      this.weekData[weekCount].day = this.formatDate(date, { weekday: 'long' });
-      this.weekData[weekCount].tempMax = this.weatherDetails.forecast.forecastday[weekCount].day.maxtemp_c.toString();
-      this.weekData[weekCount].tempMin = this.weatherDetails.forecast.forecastday[weekCount].day.mintemp_c.toString();
-      this.weekData[weekCount].summaryImage = this.weatherDetails.forecast.forecastday[weekCount].day.condition.icon;
+      this.weekData[weekCount - 1].day = this.formatDate(date, { weekday: 'long' });
+      this.weekData[weekCount - 1].tempMax = this.weatherDetails.forecast.forecastday[weekCount].day.maxtemp_c;
+      this.weekData[weekCount - 1].tempMin = this.weatherDetails.forecast.forecastday[weekCount].day.mintemp_c;
+      this.weekData[weekCount - 1].summaryImage = this.weatherDetails.forecast.forecastday[weekCount].day.condition.icon;
     }
   }
 
@@ -80,7 +80,7 @@ export class WeatherService {
     }
 
     this.todayData = [];
-    for (let todayCount = 0; todayCount < 24; todayCount += 3) {
+    for (let todayCount = 3; todayCount < 24; todayCount += 3) {
       let todayDataInstance = new todayData();
       todayDataInstance.time = this.weatherDetails.forecast.forecastday[0].hour[todayCount].time.split(" ")[1];
       todayDataInstance.summaryImage = this.weatherDetails.forecast.forecastday[0].hour[todayCount].condition.icon;
@@ -116,11 +116,11 @@ export class WeatherService {
   }
 
   celsiusToFahrenheit(celsius: number) {
-    return celsius * 9 / 5 + 32;
+    return (celsius * 9 / 5 + 32).toFixed(1);
   }
-
+  
   fahrenheitToCelsius(fahrenheit: number) {
-    return (fahrenheit - 32) * 5 / 9;
+    return ((fahrenheit - 32) * 5 / 9).toFixed(1);
   }
 
   getLocationDetails(q: string): Observable<LocationDetails> {
@@ -137,28 +137,34 @@ export class WeatherService {
     });
   }
 
-  getData() {
+  getData(): Observable<void> {
+    
     const days = 9;
-    this.getLocationDetails(this.cityName).subscribe({
-      next: (response) => {
-        this.locationDetails = response;
-        console.log(this.locationDetails);
+    return new Observable(observer => {
+      this.getLocationDetails(this.cityName).subscribe({
+        next: (locationResponse) => {
+          this.locationDetails = locationResponse;
+          console.log(this.locationDetails);
 
-        // Only fetch weather details if location details are successfully fetched
-        this.getWeatherDetails(this.cityName, days).subscribe({
-          next: (response) => {
-            this.weatherDetails = response;
-            this.prepareData();
-            console.log(this.weatherDetails);
-          },
-          error: (err) => {
-            console.error('Failed to fetch weather details:', err);
-          }
-        });
-      },
-      error: (err) => {
-        console.error('Failed to fetch location details:', err);
-      }
+          this.getWeatherDetails(this.cityName, days).subscribe({
+            next: (weatherResponse) => {
+              this.weatherDetails = weatherResponse;
+              this.prepareData();
+              console.log(this.weatherDetails);
+              observer.next();
+              observer.complete();
+            },
+            error: (err) => {
+              console.error('Failed to fetch weather details:', err);
+              observer.error(err);
+            }
+          });
+        },
+        error: (err) => {
+          console.error('Failed to fetch location details:', err);
+          observer.error(err);
+        }
+      });
     });
   }
 }
